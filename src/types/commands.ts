@@ -1,4 +1,10 @@
-import type { Collection, Message, Guild, Permission } from "../../deps.ts";
+import type {
+  botCache,
+  Collection,
+  Guild,
+  Message,
+  Permission,
+} from "../../deps.ts";
 
 export interface Command {
   name: string;
@@ -24,7 +30,18 @@ export interface Command {
   };
   arguments?: CommandArgument[];
   subcommands?: Collection<string, Command>;
-  execute?: (message: Message, args: any, guild?: Guild) => unknown;
+  preCheck?: (
+    message: Message,
+    args: any,
+    guild?: Guild,
+  ) => object;
+  execute?: (message: Message, args: any, res: object, guild?: Guild) => object;
+  postCheck?: (
+    message: Message,
+    args: any,
+    res: object,
+    guild?: Guild,
+  ) => object;
 }
 
 export interface CommandArgument {
